@@ -1,0 +1,390 @@
+@page {
+  size: A5;
+  bleed: 3mm; 
+ /* marks: crop cross; */
+  margin: 8mm;
+}
+
+/** ページ数を表示 **/
+@page :left {
+  margin-right: 5mm;
+  @bottom-left {
+    font-size: 10px;
+    font-weight: bold;
+    content: counter(page);
+  }
+}
+
+@page :right {
+  margin-left: 5mm;
+  @bottom-right {
+    font-size: 10px;
+    font-weight: bold;
+    content: counter(page);
+  }
+}
+
+/* 目次にページ数を表示 */
+.toc a::after {
+    content: target-counter(attr(href), page);
+    float: right;
+}
+
+ol {
+    counter-reset: section;
+}
+
+li {
+    list-style: none;
+}
+
+ol>li:before {
+    content : counters(section, '.') '. ';
+    counter-increment : section;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* デフォルトフォント指定 */
+* {  }
+p, h1, h2, h3, h4, li, table, .speech {
+  font-family: "M PLUS Rounded 1c";
+}
+
+p, table {
+  font-size: 12px;
+  text-indent: 1rem;
+}
+
+/* ----- 見出し -----*/
+/* 章とびら */
+h1 {
+  margin: -20mm;
+  page-break-before: always;
+  page-break-after: always;
+  display: block;
+  font-weight: 900;
+  text-align: center;
+  padding: 90mm 35mm 90mm ;
+  border: none;
+  background-image: url("../images/tobira_mahoujin.png");
+  background-repeat:no-repeat;
+}
+
+/* 目次の見出し */
+.toc h1 {
+  margin: 5mm;
+  padding: 0;
+  font-weight: normal;
+  text-align: left;
+  page-break-before: avoid;
+  page-break-after: avoid;
+  background-image: none;
+}
+
+h2{
+    background-color: #fcf0f1; /* 背景色 */
+    color: #701722; /* 文字色 */
+    padding: 15px 5px 10px 10px; /* 余白 */
+    position: relative;
+    break-after: avoid; /* 見出しがページ末に来るのを避ける */
+    font-size: 16px;
+}
+h2:after{
+ background: repeating-linear-gradient(-45deg, #f0b8bf, #f0b8bf 5px, #fcf0f1 0, #fcf0f1 10px); /* ストライプ */
+ content: '';
+ height: 6px; /* ストライプの高さ */
+ position: absolute;
+ left: 0;
+ top: 0;
+ right: 0;
+ z-index: 1;
+}
+
+h3 {
+    position: relative;
+    padding: 0 0 0.2em 36px;
+    border-bottom: 1px dashed #b8d200;
+    break-after: avoid; /* 見出しがページ末に来るのを避ける */
+    font-size: 16px;
+}
+
+h3::after {
+  position: absolute;
+  content: '';
+  display: inline-block;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  background-image: url(../images/leaf.png);
+  background-size: contain;
+  vertical-align: middle;
+}
+
+h4 {
+  font-size: 14px;
+  font-weight: bold;  
+}
+
+/* ----- リスト ----- */
+ul, ol {
+  padding: 0.5em 0 0.5em 2em;
+}
+
+ul {
+  margin-left: 2.5em;
+  padding-bottom: 1em;
+}
+
+li {
+  font-size: 12px;
+}
+
+ul li {
+  position: relative;
+  list-style: none;
+  margin-left: 0;
+    padding-left: 0;
+}
+
+ul li::after {
+  display: block;
+  content: '';
+  position: absolute;
+  top: .5em;
+  left: -1em;
+  width: 6px;
+  height: 6px;
+  background-color: #b8d200;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+ul li ul li::after  { /* ２階層目 */
+  width: 4px;
+  height: 4px;
+  background-color: #CCC;
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+
+/* ----- コード部分 ----- */
+pre { /*pre要素のスタイルをリセット */
+  margin: 0;
+  padding: 0;
+  font-family: 'Courier New';
+  overflow: auto;  
+  white-space: pre-wrap;  
+  word-wrap: break-word;  /* テキスト折り返す */
+}
+
+pre code {
+  padding: 1em;
+  margin: 0 0 0.8em 0;
+  font-size: 12px;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  border: solid 1px #555 ;
+  border-radius: 4px;
+  display: block;
+  width: 95%;
+  height: auto;
+  overflow: auto;  
+  white-space: pre-wrap;  
+  word-wrap: break-word;  /* テキスト折り返す */
+}
+
+code {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+.console code {
+  padding: 0.5em 1em; 
+  margin: 0 0 0.5em 0;
+  color: #FFF;
+  background: #000;
+  border-radius: 4px;
+  width: 95%;
+  height: auto;
+  display: block;
+}
+
+.fit figure img {
+  width: 100%;
+}
+
+.screen-shot figure img {
+  width: 50mm;
+}
+
+.book figure, .screen-shot figure, .fit figure {
+  text-align: center;
+}
+
+.book figure img {
+  width: 28mm;
+  border: solid 0.4px;
+}
+
+.author figure img {
+  width: 50px;
+  margin-bottom: 2em;
+  border: solid 0.4px;
+  float: left;
+}
+
+.float_clear {
+  clear: both;
+}
+
+.manga figure {
+  margin: -8mm;
+  text-align: center;
+}
+
+.manga figure img {
+  margin: -8mm;
+  width: 100%;
+  height: auto;
+}
+
+.speech {
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.speech .icon {
+  width: 48px;
+  height: 48px;
+  flex-basis: 48px;
+  border: solid 0.1px;
+  border-radius: 24px;
+  display: flex;
+}
+
+.speech.shinra .icon {
+  background-image: url(../images/icon_wakaba.png);
+  background-size: cover;
+}
+
+.speech.kuroneko .icon {
+  background-image: url(../images/icon_kuroneko.png);
+  background-size: cover;
+}
+
+.speech .baloon {
+  border: solid 0.1px;
+  border-radius: 4px;
+  background-color: #eeeeee;
+  padding: 10px;
+  margin-left: 10px;
+  display: inline-block;
+  width:440px;
+}
+
+.speech p {
+  display: inline;
+  align-items: center;
+}
+
+/* メモボックス */
+
+.memobox {
+  position: relative;
+  margin: 3em 0;
+  padding: 0.5em 1em;
+  border: solid 3px #20b2aa;
+}
+.memobox .box-title {
+  position: absolute;
+  display: inline-block;
+  top: -27px;
+  left: -3px;
+  padding: 0 9px;
+  height: 25px;
+  line-height: 25px;
+  vertical-align: middle;
+  font-size: 15px;
+  background: #20b2aa;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 5px 5px 0 0;
+}
+.memobox .box-text {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  text-indent: 1rem;
+}
+
+.filename {
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  font-size: small;
+}
+
+.page-break {
+    page-break-before: always;
+}
+
+.footnote {
+    float: footnote;
+    font-size: 8pt;
+    counter-increment: footnote;
+    text-indent: 0;
+}
+
+.footnote::footnote-marker {
+    content: counter(footnote);
+    font-size: 8pt;
+    vertical-align: super;
+}
+
+.footnote::footnote-call {
+    content: counter(footnote);
+    font-size: 8pt;
+    vertical-align: super;
+    display: inline;
+    line-height: 1;
+}
+
+/* コード例 */
+span.example {
+    font-size: 10px;
+    font-weight: bold;
+    margin-left: -15px;
+    color: #14716c;
+}
+
+/* ワンポイント講座 */
+.one-point {
+  width: 100%;
+  height: auto;
+}
+
+/* 表テーブル */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  text-align:left;
+  padding: 6px;
+  box-sizing:border-box;
+  border: 1px solid #ccc;
+}
+table th {
+  background:#fcf0f1;
+  color:#701722;
+}
+
+table th:first-child {
+  width: 30%;
+}
+
+table td {
+  background:#ffffff;
+  color:#333333    
+}

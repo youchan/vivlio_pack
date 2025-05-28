@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'vivlio_pack'
+
+require 'rack'
+require 'rack/handler/puma'
+
+class App
+  def call(env)
+    [200, { 'Content-Type': 'text/plain' }, ['Hello VivlioPack']]
+  end
+end
+
+app = Rack::Builder.new do
+  run App.new
+end
+
+Rack::Handler::Puma.run app
