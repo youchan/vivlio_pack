@@ -1,13 +1,12 @@
 #!/usr/bin/env ruby
 
-require 'bundler/setup'
 require 'vivlio_pack'
-
 require 'rack'
 require 'rack/handler/puma'
 
 class App
   CONTENT_TYPES = {
+    '.html' => 'text/html',
     '.png' => 'image/png',
     '.jpg' => 'image/jpeg',
     '.jpeg' => 'image/jpeg',
@@ -16,7 +15,7 @@ class App
     '.js' => 'text/javascript'
   }
 
-  VIEWER_PATH = 'node_modules/@vivliostyle/viewer/lib'
+  VIEWER_PATH = File.expand_path('../node_modules/@vivliostyle/viewer/lib', __dir__)
 
   def call(env)
     case path = env['REQUEST_PATH']
@@ -27,7 +26,7 @@ class App
       if path == '/contents'
         content_path = 'contents/index.html'
       else
-        content_path = path.replace(/^\/contents/, 'assets')
+        content_path = path
       end
       if File.exist?(content_path)
         content = File.read(content_path)

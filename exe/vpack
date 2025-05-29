@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require 'vivlio_pack'
+
+command = ARGV.shift
+case command
+when 'build'
+  generator = VivlioPack::Generator.new('.')
+  generator.generate('contents/index.html')
+else
+  puts 'Usage: vpack build'
+end
