@@ -26,7 +26,7 @@ class App
       if path == '/contents'
         content_path = 'contents/index.html'
       else
-        content_path = path
+        content_path = path.slice(1..)
       end
       if File.exist?(content_path)
         content = File.read(content_path)

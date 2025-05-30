@@ -20,8 +20,8 @@ module VivlioPack
           <html>
           <head>
             <meta charset="utf-8">
-            <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-            <link rel="stylesheet" type="text/css" href="assets/css/bw.css">
+            <link rel="stylesheet" type="text/css" href="contents/css/style.css">
+            <link rel="stylesheet" type="text/css" href="contents/css/bw.css">
             <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet">
           </head>
           <body>
