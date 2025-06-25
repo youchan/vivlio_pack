@@ -15,7 +15,7 @@ class App
     '.js' => 'text/javascript'
   }
 
-  VIEWER_PATH = File.expand_path('../node_modules/@vivliostyle/viewer/lib', __dir__)
+  VIEWER_PATH = 'node_modules/@vivliostyle/viewer/lib'
 
   def call(env)
     case path = env['REQUEST_PATH']
