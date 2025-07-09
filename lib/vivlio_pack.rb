@@ -10,3 +10,4 @@ end
 require_relative 'vivlio_pack/generator'
 require_relative 'vivlio_pack/toc_renderer'
 require_relative 'vivlio_pack/renderer'
+require_relative 'vivlio_pack/viewer'

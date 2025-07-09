@@ -1,0 +1,61 @@
+require 'rack'
+require 'rack/handler/puma'
+
+module VivlioPack
+  class Viewer
+    class App
+      CONTENT_TYPES = {
+        '.html' => 'text/html',
+        '.png' => 'image/png',
+        '.jpg' => 'image/jpeg',
+        '.jpeg' => 'image/jpeg',
+        '.css' => 'text/css',
+        '.svg' => 'image/svg+xml',
+        '.js' => 'text/javascript'
+      }
+
+      VIEWER_PATH = 'node_modules/@vivliostyle/viewer/lib'
+
+      def call(env)
+        case path = env['REQUEST_PATH']
+        when '/'
+          content = File.read(VIEWER_PATH + '/index.html')
+          [200, { 'Content-Type': 'text/html' }, [content]]
+        when /^\/contents/
+          if path == '/contents'
+            content_path = 'contents/index.html'
+          else
+            content_path = path.slice(1..)
+          end
+          if File.exist?(content_path)
+            content = File.read(content_path)
+            ext = File.extname(path)
+            ctype = CONTENT_TYPES[ext]
+            [200, { 'Content-Type': ctype }, [content]]
+          else
+            [404, {}, []]
+          end
+        else
+          if File.exist?(VIEWER_PATH + path)
+            content = File.read(VIEWER_PATH + path)
+            ext = File.extname(path)
+            ctype = CONTENT_TYPES[ext]
+            [200, { 'Content-Type': ctype }, [content]]
+          else
+            [404, {}, []]
+          end
+        end
+      end
+    end
+
+    def initialize
+      @app = Rack::Builder.new do
+        run App.new
+      end
+    end
+
+    def run
+      Rack::Handler::Puma.run @app
+    end
+  end
+end
